@@ -1,0 +1,76 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: parkshare
+      POSTGRES_PASSWORD: parkshare
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      # Must pass -d: otherwise libpq defaults DB name to the user ("parkshare"), which may not exist.
+      test: ["CMD-SHELL", "pg_isready -U parkshare -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  auth-service:
+    build: ./services/auth-service
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://parkshare:parkshare@postgres:5432/auth_db
+      JWT_SECRET: dev-jwt-secret-change-in-production
+      JWT_EXPIRES_IN: 7d
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  parking-service:
+    build: ./services/parking-service
+    environment:
+      PORT: 3002
+      DATABASE_URL: postgresql://parkshare:parkshare@postgres:5432/parking_db
+      INTERNAL_SECRET: dev-internal-secret
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  booking-service:
+    build: ./services/booking-service
+    environment:
+      PORT: 3003
+      DATABASE_URL: postgresql://parkshare:parkshare@postgres:5432/booking_db
+      INTERNAL_SECRET: dev-internal-secret
+      PARKING_SERVICE_URL: http://parking-service:3002
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      parking-service:
+        condition: service_started
+
+  gateway:
+    build: ./services/gateway
+    environment:
+      PORT: 3000
+      JWT_SECRET: dev-jwt-secret-change-in-production
+      AUTH_SERVICE_URL: http://auth-service:3001
+      PARKING_SERVICE_URL: http://parking-service:3002
+      BOOKING_SERVICE_URL: http://booking-service:3003
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - parking-service
+      - booking-service
+
+volumes:
+  pgdata:
