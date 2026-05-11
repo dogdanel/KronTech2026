@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "expo": "^55.0.23",
+    "react": "19.2.0",
+    "react-native": "0.83.6"
+  },
+  "name": "KronTech2026-main",
+  "version": "1.0.0",
+  "scripts": {}
+}
