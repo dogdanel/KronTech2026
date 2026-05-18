@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function TestTab() {
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>Index</Text>
+      <Text style={styles.title}>Elisabeta TE IUBESC</Text>
       <Text style={styles.hint}>Ma32p</Text>
       <Text style={styles.test}>ParkShare</Text>
     </View>
