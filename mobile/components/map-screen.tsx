@@ -3,8 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function MapScreen() {
   return (
     <View style={styles.web}>
-      <Text style={styles.title}>Harta poligonala</Text>
-      <Text style={styles.sub}>Deschide pe Android sau iOS.</Text>
+      <Text style={styles.title}>Harta</Text>
     </View>
   );
 }

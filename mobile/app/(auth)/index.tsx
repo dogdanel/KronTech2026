@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -178,7 +179,7 @@ export default function AuthScreen() {
           {mode === 'login' && (
             <Pressable style={styles.rememberRow} onPress={() => setRemember((r) => !r)}>
               <View style={[styles.checkbox, remember && styles.checkboxOn]}>
-                {remember ? <Text style={styles.checkMark}>✓</Text> : null}
+                {remember ? <Image source={require('../../assets/icons/check.png')} style={styles.checkMark} /> : null}
               </View>
               <Text style={styles.rememberText}>Ține minte contul</Text>
             </Pressable>
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: bg,
   },
   checkboxOn: { backgroundColor: accent, borderColor: accent },
-  checkMark: { color: '#fff', fontSize: 14, fontWeight: '800' },
+  checkMark: { width: 14, height: 14, resizeMode: 'contain' },
   rememberText: { fontSize: 15, color: text },
   error: { marginTop: 12, fontSize: 14, color: '#c62828' },
   info: { marginTop: 12, fontSize: 14, color: '#2e7d32', lineHeight: 20 },

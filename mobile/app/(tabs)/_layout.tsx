@@ -13,6 +13,7 @@ export default function TabLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen name="index" options={{ title: 'Hartă' }} />
+      <Tabs.Screen name="bookings" options={{ title: 'Rezervări' }} />
       <Tabs.Screen name="profile" options={{ title: 'Profil' }} />
       <Tabs.Screen name="example" options={{ href: null }} />
       <Tabs.Screen name="test" options={{ href: null }} />

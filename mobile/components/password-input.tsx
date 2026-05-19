@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 const muted = '#5b667a';
 const text = '#0b1220';
 const line = '#e7e9ef';
 const bg = '#f6f7fb';
-const eyeGreen = '#22c55e';
-const eyeGray = '#9ca3af';
 
 type Props = {
   value: string;
@@ -41,10 +38,9 @@ export default function PasswordInput({
         hitSlop={8}
         accessibilityRole="button"
         accessibilityLabel={visible ? 'Ascunde parola' : 'Arată parola'}>
-        <MaterialCommunityIcons
-          name={visible ? 'eye-off-outline' : 'eye-outline'}
-          size={24}
-          color={visible ? eyeGray : eyeGreen}
+        <Image
+          source={require('../assets/icons/lane.png')}
+          style={[styles.eyeIcon, { tintColor: visible ? '#f97316' : '#22c55e' }]}
         />
       </Pressable>
     </View>
@@ -73,4 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  eyeIcon: { width: 24, height: 24, resizeMode: 'contain' },
 });

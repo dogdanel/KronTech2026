@@ -27,7 +27,8 @@
     },
     "plugins": [
       "expo-router",
-      "@rnmapbox/maps"
+      "@rnmapbox/maps",
+      "@react-native-community/datetimepicker"
     ]
   }
 }
